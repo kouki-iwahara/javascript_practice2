@@ -1,20 +1,15 @@
 @charset "UTF-8";
 
-#todo-list {
-    display: flex;
-    text-align: center
+.hidden {
+    display: none;
 }
 
-span {
-    display: flex;
-}
 
 button {
-    display: block;
-    margin: 2px;
+    margin: 1px;
 }
 
 p {
     font-size: 16px;
     margin: 0;
-}
+} 
