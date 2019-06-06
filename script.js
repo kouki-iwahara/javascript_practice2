@@ -93,6 +93,7 @@ const showTodo = () => {
                disBtn[i].addEventListener('change',disChange);
           }
 
+          // タスクが追加される前に発動させないと不具合発生
           disChange();
           
           // 作成した要素をhtmlに表示
