@@ -11,27 +11,29 @@
      const todoList = document.getElementById('todo-list');
      
      // ラジオボタンに関する要素の取得
-     const allRadioBtn = document.getElementById('all-radio-btn');
      const workRadioBtn = document.getElementById('work-radio-btn');
      const compRadioBtn = document.getElementById('comp-radio-btn');
+
+     // ラジオボタンで画面切り替えをする関数
+     const disChange = (tr, switchBtn) => {    
+          tr.classList.remove('hidden');
+          if(workRadioBtn.checked === true) {
+               tr.classList.remove('hidden');
+               if(switchBtn.textContent === '完了') {
+                    tr.classList.add('hidden');
+               }
+          }else if (compRadioBtn.checked === true) {
+               tr.classList.remove('hidden');
+               if(switchBtn.textContent === '作業中') {
+                    tr.classList.add('hidden');
+               }
+          }
+     }    
      
      // addBtnのclickイベント
      addBtn.addEventListener('click', (event) => {
           const todoComment = inputTodo.value; 
           const workBtn = document.createElement('button');
-     
-          // todoリストの内容、作業中ボタンの連想配列作成
-          const todo = new Object();
-           todo.value = todoComment;
-           todo.state = workBtn;
-     
-          //空のまま追加されないように条件分岐
-           if (todo.value && todo.value.match(/\S/g)) { 
-               todos.push(todo); 
-               showTodo();
-     
-          inputTodo.value = ''; 
-     
           // 作業中/完了ボタン作成, clickイベント→作業中/完了ボタンの切り替え
           workBtn.textContent = '作業中';
           workBtn.addEventListener('click', (event) => {
@@ -41,6 +43,17 @@
                          workBtn.textContent = '作業中';
                     }
                })
+
+          // todoリストの内容、作業中ボタンの連想配列作成
+          const todo = new Object();
+           todo.value = todoComment;
+           todo.state = workBtn;
+     
+          //空のまま追加されないように条件分岐
+           if (todo.value && todo.value.match(/\S/g)) { 
+               todos.push(todo); 
+               showTodo();
+               inputTodo.value = ''; 
           }
      });
      
@@ -72,30 +85,16 @@
                     delTodo(index); //引数'index'で、idNumとcommentを紐付け
                })
      
-               // ラジオボタンで画面切り替えをする関数
-               const disChange = () => {
-                    if (allRadioBtn.checked === true) {
-                         tr.classList.remove('hidden');
-                    }else if(workRadioBtn.checked === true) {
-                         tr.classList.remove('hidden');
-                         if(switchBtn.textContent === '完了') {
-                              tr.classList.add('hidden');
-                         }
-                    }else if (compRadioBtn.checked === true) {
-                         tr.classList.remove('hidden');
-                         if(switchBtn.textContent === '作業中') {
-                              tr.classList.add('hidden');
-                         }
-                    }
-               }
-     
+               
                const disBtn = document.getElementsByName('disBtn');
                for(let i = 0; i < disBtn.length; i++) {
-                    disBtn[i].addEventListener('change',disChange);
+                    disBtn[i].addEventListener('change', function() {
+                         disChange(tr, switchBtn);
+                    });
                }
      
                // タスクが追加される前に発動させないと不具合発生
-               disChange();
+               disChange(tr, switchBtn);
                
                // 作成した要素をhtmlに表示
                todoList.appendChild(tr);
