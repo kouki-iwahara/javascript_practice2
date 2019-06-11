@@ -31,12 +31,12 @@
      }    
      
      // addBtnのclickイベント
-     addBtn.addEventListener('click', (event) => {
+     addBtn.addEventListener('click', () => {
           const todoComment = inputTodo.value; 
           const workBtn = document.createElement('button');
           // 作業中/完了ボタン作成, clickイベント→作業中/完了ボタンの切り替え
           workBtn.textContent = '作業中';
-          workBtn.addEventListener('click', (event) => {
+          workBtn.addEventListener('click', () => {
                     if(workBtn.textContent === '作業中') {
                          workBtn.textContent = '完了';
                     } else {
@@ -45,7 +45,7 @@
                })
 
           // todoリストの内容、作業中ボタンの連想配列作成
-          const todo = new Object();
+          const todo = {};
            todo.value = todoComment;
            todo.state = workBtn;
      
